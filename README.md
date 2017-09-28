@@ -1,2 +1,2 @@
-# emscripts
+# EMtools
 A set of scripts for electron microscopy

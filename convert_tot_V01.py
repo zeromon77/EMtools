@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 ## This script convert 'dm3' image files from Gatan and 'ser' image files from FEI
 
@@ -22,11 +22,15 @@ import numpy as np
 import hyperspy.api as hs
 from hyperspy.drawing import widgets
 
+# change working directory path
+wd = os.getcwd()
+os.chdir(wd)
+
 ## To generating calibration factor table as csv file
 calibration = []
 
 ## read all dm3 fils in the folder
-for filepath in sorted(glob.glob('*.dm3')):
+for filepath in sorted(glob.glob('./*.dm3')):
   img = hs.load(filepath)
 
   # get information from DM3 metadatas
@@ -39,7 +43,7 @@ for filepath in sorted(glob.glob('*.dm3')):
   ### make a table for calibration factor
   item = [filepath, cal]
   calibration.append(item)
-  np.savetxt("calibration_dm3.csv", calibration, delimiter=",", fmt='%s')
+  np.savetxt("./calibration_dm3.csv", calibration, delimiter=",", fmt='%s')
 
   ## matplotlib export setting for savefig function
   ## redefine dpi to export the image with the origing image pixel size
@@ -75,18 +79,19 @@ for filepath in sorted(glob.glob('*.dm3')):
   ## New resolution is using subplots_adjust.
 
   plt.subplots_adjust(bottom=0, left=0, right=1, top=1)
-  plt.savefig("%s.png" %(filename), frameon=False, overwrite=True, dpi=dpx)
+  plt.savefig("./%s.png" %(filename), frameon=False, overwrite=True, dpi=dpx)
   plt.close()
   print("%s is converted" %(filename))
 
 
 ### This part is for converting 'ser' files from FEI company
 
+
 ## To generating calibration table as csv file
 calibration = []
 
 ## read all ser fils in the folder
-for filepath in sorted(glob.glob('*.ser')):
+for filepath in sorted(glob.glob('./*.ser')):
   img = hs.load(filepath)
 
   # get information from DM3 metadatas
@@ -99,7 +104,7 @@ for filepath in sorted(glob.glob('*.ser')):
  ### make a table for calibration factor
   item = [filepath, img.original_metadata.ser_header_parameters.CalibrationDeltaX]
   calibration.append(item)
-  np.savetxt("calibration_ser.csv", calibration, delimiter=",", fmt='%s')
+  np.savetxt("./calibration_ser.csv", calibration, delimiter=",", fmt='%s')
 
 
   dpx = res*100/600
@@ -124,6 +129,6 @@ for filepath in sorted(glob.glob('*.ser')):
   plt.rcParams['mathtext.fontset'] = "stix"
 
   plt.subplots_adjust(bottom=0, left=0, right=1, top=1)
-  plt.savefig("%s.png" %(filename), frameon=False, overwrite=True, dpi=dpx)
+  plt.savefig("./%s.png" %(filename), frameon=False, overwrite=True, dpi=dpx)
   plt.close()
   print("%s is converted" %(filename))

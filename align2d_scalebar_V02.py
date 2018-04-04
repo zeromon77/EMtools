@@ -1,6 +1,14 @@
+#!/usr/bin/env python3
+
 # This script aligns the drifts of sequantial images and forms a single image (rigid drifit correction)
-# Author: Daesung Park
-# Date: 2018.04.02
+# Prerequsits: hyperspy, numpy, matplotlib
+
+# Script information for the file.
+__author__ = "Daesung Park"
+__email__ = "zeromon.park@gmail.com"
+__version__ = "0.2"
+__copyright__ = "Copyright (c) 2017 Daesung Park"
+__license__ = "GPL v2"
 
 
 import hyperspy.api as hs
@@ -9,6 +17,10 @@ import numpy as np
 import glob
 import os
 from hyperspy.drawing import widgets
+
+# change working directory path
+wd = os.getcwd()
+os.chdir(wd)
 
 os.makedirs('scalebar', exist_ok=True)
 
